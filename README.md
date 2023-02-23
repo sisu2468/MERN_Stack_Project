@@ -5,7 +5,7 @@
 
 ### PROJECT: **ChargeMate(D7)**
 
-### COMPANY: **ChargeKart** [www.chargekart.co.in](https://www.chargekart.co.in) 
+### COMPANY: **ChargeKart** ( [www.chargekart.co.in](https://www.chargekart.co.in) )
 
 ### Team Members: 
 - Bhav Beri _(2021111013)_
