@@ -16,13 +16,13 @@ export const Navbar = () => {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarNav">
                         <ul className="navbar-nav">
-                            <li className="nav-item">
+                            <li className="nav-item mx-4">
                                 <a className="nav-link" aria-current="page" onClick={() => (nav('/profile'))}>Profile</a>
                             </li>
-                            <li className="nav-item">
+                            <li className="nav-item mx-2">
                                 <a className="nav-link" onClick={() => (nav('/addLocation'))}>Add new location</a>
                             </li>
-                            <li className="nav-item">
+                            <li className="nav-item mx-4">
                                 <a className="nav-link" onClick={() => (nav('/addRobot'))}>Add new Robot</a>
                             </li>
                         </ul>
