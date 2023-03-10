@@ -28,8 +28,7 @@ else:
 
 # DDOS Protection + Rate Limiting
 limiter = Limiter(key_func=get_remote_address, default_limits=["60/minute"])
-limiter.limit("15/minute", per_method=True,
-              methods=["POST"], endpoint="/auth/*")
+# limiter.shared_limit(limit_value="5/minute", scope="login")
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 app.add_middleware(SlowAPIMiddleware)
