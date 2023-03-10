@@ -107,6 +107,8 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
 
 
 async def get_current_user(request: Request, access_token: str = Cookie(None)):
+    if access_token == None:
+        raise HTTPException(status_code=401, detail="Not Authenticated")
     try:
         payload = jwt.decode(access_token, SECRET_KEY, algorithms=[ALGORITHM])
         username = payload.get("sub")
@@ -126,7 +128,7 @@ async def get_current_user(request: Request, access_token: str = Cookie(None)):
 # User Registration Endpoint
 
 
-@router.post("/register", status_code=status.HTTP_201_CREATED)
+@router.post("/register", status_code=status.HTTP_201_CREATED, response_model=UserLoginResponse)
 async def register(response: Response, user: User):
     # Check if user already exists
     if get_user_by_username(user.username):
@@ -165,3 +167,12 @@ async def login(response: Response, form_data: OAuth2PasswordRequestForm = Depen
 @router.get("/me")
 async def read_users_me(request: Request, current_user: User = Depends(get_current_user)):
     return current_user
+
+
+@router.get("/logout")
+async def logout(request: Request, response: Response, current_user: User = Depends(get_current_user)):
+    # Also tried following two comment lines
+    # response.set_cookie(key="access_token", value="", max_age=1)
+    # response.delete_cookie("access_token", domain="localhost")
+    response.delete_cookie("access_token")
+    return {"message": "Logged Out Successfully"}
