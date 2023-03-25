@@ -30,7 +30,7 @@ else:
 
 
 @app.get("/")
-async def index(request: Request):
+async def index():
     return {"message": "Backend Running!!"}
 
 
