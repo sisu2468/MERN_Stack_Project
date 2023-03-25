@@ -1,7 +1,7 @@
 bcrypt==4.0.1
 cryptography==39.0.2
 email-validator>=1.1.1,<2.0.0
-enum==0.4.7
+enums.py==0.6.0
 fastapi==0.88.0
 httpx==0.23.3
 ipython==8.11.0

@@ -26,9 +26,11 @@ print(SECRET_KEY)
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login")
 
 
-class Role(str, Enum):
-    ADMIN = 'ADMIN'
-    OPERATIONS = 'OPERATIONS'
+# class Role(str, Enum):
+#     ADMIN = 'ADMIN'
+#     OPERATIONS = 'OPERATIONS'
+
+Role = Enum("Role", ["ADMIN", "OPERATIONS"])
 
 # Admin Model
 class Admin(BaseModel):
