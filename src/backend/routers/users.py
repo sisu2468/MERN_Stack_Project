@@ -20,8 +20,6 @@ SECRET_KEY = getenv("JWT_SECRET_KEY", "this_is_my_very_secretive_secret")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
-print(SECRET_KEY)
-
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login")
 
 # User Model
