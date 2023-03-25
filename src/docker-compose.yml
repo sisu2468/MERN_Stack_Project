@@ -20,20 +20,33 @@ services:
         env_file:
             - ./.env
         entrypoint: /frontend/entrypoint.sh
-        ports:
-          - 3000:3000
+        # ports:
+        #   - 3000:3000
     
     backend:
         build: ./backend
         env_file:
             - ./.env
-        ports:
-            - 5000:5000
+        # ports:
+        #     - 5000:5000
         volumes:
             - ./backend:/app
         tty: true
         depends_on:
             - mongo
+    
+    web:
+        build: ./nginx/
+        restart: unless-stopped
+        ports:
+            - 80:80
+            - 443:443
+        environment:
+            - BACKEND=5000
+            - FRONTEND=3000
+        depends_on:
+            - frontend
+            - backend
 
 volumes:
     mongo_data:

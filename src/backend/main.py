@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from os import getenv
 from routers import users, admin
 
@@ -16,6 +16,7 @@ if DEBUG:
         debug=DEBUG,
         title="ChargeMate D7",
         description="DASS Project 2k23 - Team-37",
+        root_path="/api"
     )
 else:
     app = FastAPI(
@@ -23,8 +24,19 @@ else:
         title="ChargeMate D7",
         description="DASS Project 2k23 - Team-37",
         docs_url=None,
-        redoc_url=None
+        redoc_url=None,
+        root_path="/api"
     )
+
+
+@app.get("/")
+async def index(request: Request):
+    return {"message": "Backend Running!!"}
+
+
+@app.get("/root")
+async def root(request: Request):
+    return {"message": "Backend Running!!", "root_path": request.scope.get("root_path")}
 
 # DDOS Protection + Rate Limiting
 limiter = Limiter(key_func=get_remote_address, default_limits=["60/minute"])
