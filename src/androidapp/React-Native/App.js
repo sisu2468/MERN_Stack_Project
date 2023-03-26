@@ -59,7 +59,7 @@ function App() {
         <Text>Is Connected? {(netInfo.isConnected || false).toString()} { (netInfo.isInternetReachable || false).toString()}</Text>
       </View> */}
       <WebView
-        source={{ uri: "greddiit.vercel.app" }}
+        source={{ uri: "https://greddiit.vercel.app" }}
         // source={{ uri: "10.1.133.241:80" }}
         style={{ marginTop: 25 }}
         setBuiltInZoomControls={false}
