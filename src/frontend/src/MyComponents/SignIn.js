@@ -58,7 +58,7 @@ const SignIn = () => {
             alignItems: 'center',
           }}
         >
-          <img src = "https://static.wixstatic.com/media/8f4dc3_f4330f89a1eb4569bd3a978b642a2850~mv2.png/v1/fill/w_432,h_80,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Text.png"/>
+          <img src="https://static.wixstatic.com/media/8f4dc3_f4330f89a1eb4569bd3a978b642a2850~mv2.png/v1/fill/w_432,h_80,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Text.png" width= '100%'/>
           <hr/>
           <hr/>
 
