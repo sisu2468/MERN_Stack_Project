@@ -6,7 +6,7 @@ export const NavigationContext = createContext();
 const NavigationContextProvider = ({ children }) => {
     const [navigation, setNavigation] = useState({});
     const [loginopen, setLoginopen] = useState(false);
-    const [loginemail, setLoginemail] = useState('xyz@greddit.com');
+    const [loginemail, setLoginemail] = useState('abc@email.com');
     const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
 
     return (

@@ -78,14 +78,14 @@ const SignupForm = (props) => {
             else return response.json();
         }).then(function (response) {
             props.setSession(response);
-            props.updateEmail('xyz@greddiit.com');
+            props.updateEmail('abc@email.com');
             handleOnClick("/profile");
         }).catch((error) => {
             console.log(error);
             alert("ERROR");
         });
 
-        // props.updateEmail('xyz@greddiit.com');
+        // props.updateEmail('abc@email.com');
         // handleOnClick("/profile");
     };
 
