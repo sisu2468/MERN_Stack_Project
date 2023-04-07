@@ -11,7 +11,6 @@ import { useHistory, Link } from "react-router-dom";
 
 import { NavigationContext } from "contexts/NavigationContext";
 import { SessionContext } from 'contexts/SessionContext';
-import { ReactComponent as LogoFull } from "assets/images/logo.svg";
 import logo from "assets/images/logo.png";
 import Login from 'components/Login/Login';
 
