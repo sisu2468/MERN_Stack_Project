@@ -77,6 +77,8 @@ function ResponsiveDrawer(props) {
         //     if (fun[i + 1])
         //         fun[i](fun[i + 1]);
         // }
+
+        handleCloseUserMenu();
     };
 
     // console.log(props);
@@ -141,23 +143,25 @@ function ResponsiveDrawer(props) {
                             <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, flexGrow: 1 }}>
                                 {/* <LogoFull style={{ height: 60 }} /> */}
                                 <img
-                                    src={`${logo}`}
-                                    srcSet={`${logo}`}
-                                    // src={`${logo}?w=248&fit=crop&auto=format`}
-                                    // srcSet={`${logo}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                                    // src={`${logo}`}
+                                    // srcSet={`${logo}`}
+                                    src={`${logo}?w=248&fit=crop&auto=format`}
+                                    srcSet={`${logo}?w=248&fit=crop&auto=format&dpr=2 2x`}
                                     alt={'Logo'}
                                     loading="lazy"
+                                    // width={248}
                                 />
                             </Box>
                             <Box sx={{ display: { xs: 'flex', md: 'none' }, mr: 2, flexGrow: 1 }}>
                                 {/* <LogoFull style={{ height: 80 }} /> */}
                                 <img
-                                    src={`${logo}`}
-                                    srcSet={`${logo}`}
-                                    // src={`${logo}?w=248&fit=crop&auto=format`}
-                                    // srcSet={`${logo}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                                    // src={`${logo}`}
+                                    // srcSet={`${logo}`}
+                                    src={`${logo}?w=250&fit=crop&auto=format`}
+                                    srcSet={`${logo}?w=250&fit=crop&auto=format&dpr=2 2x`}
                                     alt={'Logo'}
                                     loading="lazy"
+                                    // width={248}
                                 />
                             </Box>
                             {/* <Typography
