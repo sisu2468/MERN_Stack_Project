@@ -199,7 +199,7 @@ async def check_user(request: Request, access_token: str = Depends(check_current
 
 # User Logout
 
-@router.get("/logout")
+@router.post("/logout")
 async def logout(request: Request, response: Response, current_user: User = Depends(get_current_user)):
     # Also tried following two comment lines
     # response.set_cookie(key="access_token", value="", max_age=1)
