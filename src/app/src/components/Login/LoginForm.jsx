@@ -5,23 +5,25 @@ import * as Yup from 'yup';
 
 import { Button, TextField, Grid, Box } from '@mui/material';
 
-Yup.addMethod(Yup.string, "authenticate", function (val, errorMessage) {
-    return this.test(`test-card-type`, errorMessage, function (value) {
-        const { path, createError } = this;
+// Yup.addMethod(Yup.string, "authenticate", function (val, errorMessage) {
+//     return this.test(`test-card-type`, errorMessage, function (value) {
+//         const { path, createError } = this;
 
-        return (
-            value === val ||
-            createError({ path, message: errorMessage })
-        );
-    });
-});
+//         return (
+//             value === val ||
+//             createError({ path, message: errorMessage })
+//         );
+//     });
+// });
 
 const validationSchema = Yup.object({
-    email: Yup
-        .string('Enter your email')
-        .email('Invalid email addresss`')
-        .required('Email is required'),
-    // .authenticate("admin@greddit.com","ERROR"),
+    // email: Yup
+    //     .string('Enter your email')
+    //     .email('Invalid email addresss`')
+    //     .required('Email is required'),
+    username: Yup
+        .string('Enter your username')
+        .required('Username is required'),
     password: Yup
         .string('Enter your password')
         .min(5, 'Password should be of minimum 5 characters length')
@@ -53,7 +55,7 @@ const LoginForm = (props) => {
             else return response.json();
         }).then(function (response) {
             props.setSession(response);
-            props.updateEmail('abc@email.com');
+            // props.updateEmail('abc@email.com');
             handleOnClick("/profile");
         }).catch((error) => {
             console.log(error);
@@ -65,7 +67,8 @@ const LoginForm = (props) => {
 
     const formik = useFormik({
         initialValues: {
-            email: props.email,
+            // email: props.email,
+            username: '',
             password: '',
         },
         validationSchema: validationSchema,
@@ -75,13 +78,13 @@ const LoginForm = (props) => {
         onSubmit: handleSubmit
     });
 
-    useEffect(() => { props.updateEmail(formik.values.email); }, [formik.values.email, props]);
+    // useEffect(() => { props.updateEmail(formik.values.email); }, [formik.values.email, props]);
 
     return (
         <div>
             <form onSubmit={formik.handleSubmit}>
                 <Grid container spacing={2}>
-                    <Grid item xs={12} md={6}>
+                    {/* <Grid item xs={12} md={6}>
                         <Box mb={2}>
                             <TextField
                                 // fullWidth
@@ -97,6 +100,25 @@ const LoginForm = (props) => {
                                 onBlur={formik.handleBlur}
                                 error={formik.touched.email && Boolean(formik.errors.email)}
                                 helperText={formik.touched.email && Boolean(formik.errors.email) && ("❌ " + formik.errors.email)}
+                            />
+                        </Box>
+                    </Grid> */}
+                    <Grid item xs={12} md={6}>
+                        <Box mb={2}>
+                            <TextField
+                                // fullWidth
+                                id="username"
+                                name="username"
+                                label="Username"
+                                variant="outlined"
+                                sx={{ "&:before:content": "❌ " }}
+                                // style={{ marginTop: 11, borderColor: (formik.touched.username && Boolean(formik.errors.username)) ? "red" : "" }}
+                                // color="secondary"
+                                value={formik.values.username}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                error={formik.touched.username && Boolean(formik.errors.username)}
+                                helperText={formik.touched.username && Boolean(formik.errors.username) && ("❌ " + formik.errors.username)}
                             />
                         </Box>
                     </Grid>
