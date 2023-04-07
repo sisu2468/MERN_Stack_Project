@@ -67,10 +67,10 @@ const Profile = () => {
                         }}
                     >
                         {session ?
-                            <Avatar alt={data.fname || null} src="/static/images/avatar/2.jpg" sx={{ height: '70px', width: '70px' }} /> :
+                            <Avatar alt={data.full_name || null} src="/static/images/avatar/2.jpg" sx={{ height: '70px', width: '70px' }} /> :
                             <Avatar sx={{ height: '70px', width: '70px' }} />}
                     </Divider>
-                    <h3>Name: {data.fname || "ADMIN"} {data.lname || ""}</h3>
+                    <h3>Name: {data.full_name || "ADMIN"} {data.lname || ""}</h3>
                     <h3>Username: {data.username || "admin"}</h3>
                     <h3>Email: {data.email}</h3>
                     <h3>Contact: {data.contact || "-"}</h3>
