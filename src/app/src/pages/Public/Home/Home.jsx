@@ -17,12 +17,7 @@ const Home = () => {
     return (
         <Page full header={"Home"} loading={false} empty={false}>
             <h1>ChargeMate D7</h1>
-            {/* <h2> HOME </h2> */}
-            {/* <Carousel />
-            <Upcoming />
-            <About />
-            <Gallery />
-            <Footer /> */}
+            <h2> DASS Project </h2>
         </Page>
     );
 };
