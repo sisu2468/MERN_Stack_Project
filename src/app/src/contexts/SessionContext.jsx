@@ -8,8 +8,8 @@ const SessionContextProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch('/api/auth/login', {
-            method: 'POST',
+        fetch('/api/auth/current', {
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
             }

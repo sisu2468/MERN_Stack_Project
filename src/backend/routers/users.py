@@ -189,6 +189,16 @@ async def read_users_me(request: Request, current_user: User = Depends(get_curre
     return current_user
 
 
+@router.get("/current", response_model=UserLoginResponse)
+async def check_user(request: Request, access_token: str = Depends(check_current_user)):
+    if not access_token:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                            detail="Unauthorized")
+    return {"access_token": access_token, "token_type": "bearer"}
+
+
+# User Logout
+
 @router.get("/logout")
 async def logout(request: Request, response: Response, current_user: User = Depends(get_current_user)):
     # Also tried following two comment lines
