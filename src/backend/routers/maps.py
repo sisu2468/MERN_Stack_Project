@@ -148,7 +148,7 @@ def remove_parking_location(locid: int):
         if maps:
             db.maps.delete_many({"locid": locid})
         
-        db.locations.remove({"locid": locid})
+        db.locations.delete_one({"locid": locid})
         return {"message": "Parking Location deleted successfully!"}
     raise HTTPException(status_code=404, detail="Parking Location not Found!")
 
@@ -157,5 +157,5 @@ def remove_parking_location(locid: int):
 def get_parking_location(locid: int):
     pl = get_parking_location_by_id(locid)
     if pl:
-        return Location(**pl)
+        return pl
     raise HTTPException(status_code=404, detail="Parking Location not Found!")
