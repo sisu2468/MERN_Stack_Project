@@ -36,7 +36,7 @@ class ManyLocationsResponse(BaseModel):
 class ManyMapsResponse(BaseModel):
     maps: List[Map] | None
 
-def get_parking_location_by_id(id: int, response_model = ManyLocationsResponse):
+def get_parking_location_by_id(id: int):
     pl = db.locations.find_one({"locid": id}, {"_id": 0})
     if pl:
         return Location(**pl)
@@ -44,7 +44,7 @@ def get_parking_location_by_id(id: int, response_model = ManyLocationsResponse):
         return None
 
 
-def get_parking_location_by_pin(pin: int, response_model=ManyLocationsResponse):
+def get_parking_location_by_pin(pin: int):
     pl = db.locations.find_one({"pin": pin}, {"_id": 0})
     if pl:
         return Location(**pl)
@@ -61,15 +61,6 @@ def get_parking_location_id():
         return 0
     return 1 + l[0]
 
-
-def get_parking_map_by_id(id: int, response_model = ManyMapsResponse):
-    map = db.maps.find_one({"mapid": id}, {"_id": 0})
-    if map:
-        return Map(**map)
-    else:
-        return None
-
-
 def get_parking_map_id():
     maps = list(db.maps.find({}, {"mapid": 1, "_id": 0}))
     map_ids = [m["mapid"] for m in maps]
@@ -78,7 +69,7 @@ def get_parking_map_id():
         return 0
     return 1 + map_ids[0]
     
-
+# Endpoint to get all parking locations
 @router.get("/locations")
 def get_locations(request: Request):
     locations = list(db.locations.find({}, {"_id": 0}))
@@ -86,7 +77,7 @@ def get_locations(request: Request):
         return ManyLocationsResponse(locations = locations)
     return None
 
-
+# Endpoint to get all parking maps (irrespective of location)
 @router.get("/maps")
 def get_maps(request: Request):
     maps = list(db.maps.find({}, {"_id": 0}))
@@ -94,7 +85,7 @@ def get_maps(request: Request):
         return ManyMapsResponse(maps = maps)
     return None
 
-
+# Endpoint to get all parking locations for a particular location
 @router.get("/maps/{locid}")
 def get_map_locid(request: Request, locid: int):
     maps = list(db.maps.find({"locid":locid}, {"_id": 0}))
@@ -148,28 +139,23 @@ def add_parking_map(map: Map, is_admin: bool = Depends(check_current_admin)):
     db.maps.insert_one(map.dict())
     return {"mapid": map.mapid}
 
-"""
-Checked the code until here.............
-"""
-
-#Endpoint to get all parking locations
-@router.get("/parking-locations")
-def get_parking_locations():
-    return db.parking_locations.fetch_all()
+# Endpoint to remove a parking location by id
+@router.delete("/parking-locations/{locid}")
+def remove_parking_location(locid: int):
+    pl = get_parking_location_by_id(locid)
+    if pl:
+        maps = db.maps.find({"locid": locid})
+        if maps:
+            db.maps.delete_many({"locid": locid})
+        
+        db.locations.remove({"locid": locid})
+        return {"message": "Parking Location deleted successfully!"}
+    raise HTTPException(status_code=404, detail="Parking Location not Found!")
 
 #Endpoint to get a single parking location by id
-@router.get("/parking-locations/{parking_location_id}")
-def get_parking_location(parking_location_id: int):
-    pl = get_parking_location_by_id(parking_location_id)
+@router.get("/parking-locations/{locid}")
+def get_parking_location(locid: int):
+    pl = get_parking_location_by_id(locid)
     if pl:
         return Location(**pl)
-    raise HTTPException(status_code=404, detail="Parking location not found")
-
-#Endpoint to remove a parking location by id
-@router.delete("/parking-locations/{parking_location_id}")
-def remove_parking_location(parking_location_id: int):
-    pl = get_parking_location_by_id(parking_location_id)
-    if pl:
-        db.parking_locations.remove({"id": parking_location_id})
-        return {"message": "Parking location deleted successfully"}
-    raise HTTPException(status_code=404, detail="Parking location not found")
+    raise HTTPException(status_code=404, detail="Parking Location not Found!")
