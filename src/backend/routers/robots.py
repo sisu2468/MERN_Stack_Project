@@ -51,7 +51,7 @@ def add_robot(robot: Robot, is_admin: bool = Depends(get_current_admin)):
 
 # Endpoint to get all robots
 @router.get("/all")
-def get_robots(request: Request):
+def get_robots(request: Request, is_admin: bool = Depends(get_current_admin)):
     locations = list(db.robots.find({}, {"_id": 0}))
     if len(locations):
         return ManyRobotsResponse(locations=locations)
