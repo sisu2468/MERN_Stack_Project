@@ -26,6 +26,44 @@ function Copyright(props) {
   );
 }
 
+
+const url = "http://localhost:8000/login";  // The URL of your API endpoint
+const username = "your_username";  // The username for sign-in
+const password = "your_password";  // The password for sign-in
+
+// Prepare the request data
+const data = new URLSearchParams();
+data.append("username", username);
+data.append("password", password);
+
+// Make the POST request to the API
+fetch(url, {
+  method: "POST",
+  body: data
+})
+.then(response => {
+  if (response.ok) {
+    // Extract the response data
+    return response.json();
+  } else {
+    throw new Error(`Error: ${response.status} - ${response.statusText}`);
+  }
+})
+.then(responseData => {
+  // Access the access token, token type, and role from the response data
+  const access_token = responseData.access_token;
+  const token_type = responseData.token_type;
+  const role = responseData.role;
+  // Do whatever you want with the access token, token type, and role
+  console.log(`Access Token: ${access_token}`);
+  console.log(`Token Type: ${token_type}`);
+  console.log(`Role: ${role}`);
+})
+.catch(error => {
+  // Handle the error response
+  console.error(error);
+});
+
 const theme = createTheme();
 
 const SignIn = () => {
