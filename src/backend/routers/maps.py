@@ -79,7 +79,7 @@ def get_locations(request: Request):
 
 # Endpoint to get all parking maps (irrespective of location)
 @router.get("/maps")
-def get_maps(request: Request):
+def get_maps(request: Request, is_admin: bool = Depends(check_current_admin)):
     maps = list(db.maps.find({}, {"_id": 0}))
     if len(maps):
         return ManyMapsResponse(maps = maps)
@@ -141,7 +141,7 @@ def add_parking_map(map: Map, is_admin: bool = Depends(check_current_admin)):
 
 # Endpoint to remove a parking location by id
 @router.delete("/parking-locations/{locid}")
-def remove_parking_location(locid: int):
+def remove_parking_location(locid: int, is_admin: bool = Depends(check_current_admin)):
     pl = get_parking_location_by_id(locid)
     if pl:
         maps = db.maps.find({"locid": locid})
