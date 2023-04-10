@@ -3,7 +3,7 @@ from pydantic import BaseModel
 # from enum import Enum
 from typing import Optional, List
 from db import db
-from routers.admin import get_current_admin
+from routers.admin import check_current_admin
 
 router = APIRouter()
 
@@ -41,7 +41,7 @@ def get_robot_id():
 
 # Add a new robot
 @router.post("/new")
-def add_robot(robot: Robot, is_admin: bool = Depends(get_current_admin)):
+def add_robot(robot: Robot, is_admin: bool = Depends(check_current_admin)):
     robot.roboid = get_robot_id()
     if get_robo_by_key(robot.roskey):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
@@ -51,7 +51,7 @@ def add_robot(robot: Robot, is_admin: bool = Depends(get_current_admin)):
 
 # Endpoint to get all robots
 @router.get("/all")
-def get_robots(request: Request, is_admin: bool = Depends(get_current_admin)):
+def get_robots(request: Request, is_admin: bool = Depends(check_current_admin)):
     locations = list(db.robots.find({}, {"_id": 0}))
     if len(locations):
         return ManyRobotsResponse(locations=locations)

@@ -5,7 +5,7 @@ from typing import Optional
 # from os import getenv
 from typing import Optional, List
 from db import db
-from routers.admin import get_current_admin
+from routers.admin import check_current_admin
 # from routers.users import check_current_user, get_current_user
 
 router = APIRouter()
@@ -23,7 +23,7 @@ class Location(BaseModel):
 # Define the model for the parking map
 class Map(BaseModel):
     mapid: int
-    location: Location
+    locid: int
     floor: str
     parking_slots: list
     robot_ids: list = []
@@ -94,9 +94,17 @@ def get_maps(request: Request):
         return ManyMapsResponse(maps = maps)
     return None
 
+
+@router.get("/maps/{locid}")
+def get_map_locid(request: Request, locid: int):
+    maps = list(db.maps.find({"locid":locid}, {"_id": 0}))
+    if len(maps):
+        return ManyMapsResponse(maps=maps)
+    return None
+
 #Endpoint to add a new parking location
 @router.post("/new-location")
-def add_parking_location(location: Location, is_admin: bool = Depends(get_current_admin)):
+def add_parking_location(location: Location, is_admin: bool = Depends(check_current_admin)):
     location.locid = get_parking_location_id()
 
     if get_parking_location_by_pin(location.pin_code):
@@ -120,14 +128,14 @@ def add_parking_location(location: Location, is_admin: bool = Depends(get_curren
 
 #Endpoint to add a new parking map
 @router.post("/new-map")
-def add_parking_map(map: Map, is_admin: bool = Depends(get_current_admin)):
+def add_parking_map(map: Map, is_admin: bool = Depends(check_current_admin)):
     # Check if the map URL already exists
     existing_map = db.maps.find_one({"map_url": map.map_url}, {"_id": 0})
     if existing_map:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                             detail="Map URL already exists")
 
-    existing_map = db.maps.find_one({"location": map.location.dict(), 
+    existing_map = db.maps.find_one({"location": map.locid, 
                                       "floor": map.floor, 
                                       "parking_slots": map.parking_slots},
                                      {"_id": 0})
