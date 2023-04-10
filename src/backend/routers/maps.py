@@ -1,12 +1,12 @@
-from fastapi import APIRouter, HTTPException, Depends, Response, status, Cookie, Request
+from fastapi import APIRouter, HTTPException, Depends, status, Cookie, Request
 from pydantic import BaseModel
 from typing import Optional
-from enum import Enum
-from os import getenv
+# from enum import Enum
+# from os import getenv
 from typing import Optional, List
 from db import db
 from routers.admin import get_current_admin
-from routers.users import check_current_user, get_current_user
+# from routers.users import check_current_user, get_current_user
 
 router = APIRouter()
 
@@ -20,6 +20,7 @@ class Location(BaseModel):
     landmark: Optional[str] = None
     pin_code: int
 
+# Define the model for the parking map
 class Map(BaseModel):
     mapid: int
     location: Location
@@ -81,7 +82,6 @@ def get_parking_map_id():
 @router.get("/locations")
 def get_locations(request: Request):
     locations = list(db.locations.find({}, {"_id": 0}))
-    print(locations)
     if len(locations):
         return ManyLocationsResponse(locations = locations)
     return None
