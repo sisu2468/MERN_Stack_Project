@@ -50,7 +50,7 @@ def add_robot(robot: Robot, is_admin: bool = Depends(get_current_admin)):
     return {"roboid": robot.roboid}
 
 # Endpoint to get all robots
-@router.get("/new")
+@router.get("/all")
 def get_robots(request: Request):
     locations = list(db.robots.find({}, {"_id": 0}))
     if len(locations):
@@ -61,7 +61,7 @@ def get_robots(request: Request):
 Checked the code until here.............
 """
 # Endpoint to get a single robot by id
-@router.get("/robots/{robot_id}")
+@router.get("/robot/{robot_id}")
 def get_robot(robot_id: int):
     rb = get_robo_by_id(robot_id)
     if rb:
@@ -69,7 +69,7 @@ def get_robot(robot_id: int):
     raise HTTPException(status_code=404, detail="Robot not found")
 
 # Endpoint to remove a robot by id
-@router.delete("/robots/{robot_id}")
+@router.delete("/robot/{robot_id}")
 def remove_robot(robot_id: int):
     rb = get_robo_by_id(robot_id)
     if rb:
