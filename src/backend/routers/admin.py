@@ -24,11 +24,11 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 60
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login")
 
 
-# class Role(str, Enum):
-#     ADMIN = 'ADMIN'
-#     OPERATIONS = 'OPERATIONS'
+class Role(str, Enum):
+    ADMIN = 'ADMIN'
+    OPERATIONS = 'OPERATIONS'
 
-Role = Enum("Role", ["ADMIN", "OPERATIONS"])
+# Role = Enum("Role", ["ADMIN", "OPERATIONS"])
 
 # Admin Model
 class Admin(BaseModel):
@@ -144,7 +144,7 @@ async def check_current_admin(request: Request, access_token: str = Cookie(None)
         if admin is None:
             return False
         del admin.password
-        return admin
+        return True
     except JWTError:
         return False
 
