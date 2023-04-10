@@ -130,6 +130,23 @@ async def get_current_admin(request: Request, access_token: str = Cookie(None)):
     except JWTError:
         raise HTTPException(
             status_code=401, detail="Invalid authentication credentials")
+    
+
+async def check_current_admin(request: Request, access_token: str = Cookie(None)):
+    if access_token == None:
+        return False
+    try:
+        payload = jwt.decode(access_token, SECRET_KEY, algorithms=[ALGORITHM])
+        username = payload.get("sub")
+        if username is None:
+            return False
+        admin = get_admin_by_username(username)
+        if admin is None:
+            return False
+        del admin.password
+        return admin
+    except JWTError:
+        return False
 
 # Admin Registration Endpoint
 

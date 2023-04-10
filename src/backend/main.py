@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Request
 from os import getenv
-from routers import users, admin
+from routers import users, admin, maps, robots
 
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.middleware import SlowAPIMiddleware
@@ -28,12 +28,12 @@ else:
         root_path="/api"
     )
 
-
+# Backend Index Page - For checking purposes
 @app.get("/")
 async def index():
     return {"message": "Backend Running!!"}
 
-
+# Getting the root path of the backend
 @app.get("/root")
 async def root(request: Request):
     return {"message": "Backend Running!!", "root_path": request.scope.get("root_path")}
@@ -48,3 +48,5 @@ app.add_middleware(SlowAPIMiddleware)
 # Mount the user router on the "/auth" path
 app.include_router(users.router, prefix="/auth", tags=["auth"])
 app.include_router(admin.router, prefix="/admin/auth", tags=["admin/auth"])
+app.include_router(maps.router, prefix="/maps", tags=["parking_locations_and_maps"])
+app.include_router(robots.router, prefix="/robots", tags=["robots"])
