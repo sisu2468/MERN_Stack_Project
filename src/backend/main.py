@@ -28,12 +28,12 @@ else:
         root_path="/api"
     )
 
-
+# Backend Index Page - For checking purposes
 @app.get("/")
 async def index():
     return {"message": "Backend Running!!"}
 
-
+# Getting the root path of the backend
 @app.get("/root")
 async def root(request: Request):
     return {"message": "Backend Running!!", "root_path": request.scope.get("root_path")}
