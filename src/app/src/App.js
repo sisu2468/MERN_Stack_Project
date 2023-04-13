@@ -22,6 +22,12 @@ const publicRoutes = [
         component: <Public.Home />,
         exact: true,
     },
+    {
+        title: "My Other Pages",
+        path: "/mysubs",
+        icon: FolderShared,
+        component: <MySubGreddiits.MySubGreddiits />,
+    },
 ];
 
 const loginRoutes = [
@@ -41,12 +47,7 @@ const secureRoutes = [
         component: <ProfileSystem.Profile />,
         // exact: true,
     },
-    {
-        title: "My Other Pages",
-        path: "/mysubs",
-        icon: FolderShared,
-        component: <MySubGreddiits.MySubGreddiits />,
-    },
+    
 ];
 
 function App() {
