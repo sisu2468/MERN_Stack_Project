@@ -69,14 +69,16 @@ export const AddLoc = () => {
         const formData = new FormData();
 
         // Append the input values to the formData object
-        formData.append('username', input.name);
+        formData.append('locid', 0);
+        formData.append('name', input.name);
         formData.append('city', input.city);
         formData.append('pin_code', input.pin_code);
         formData.append('landmark', input.landmark);
         formData.append('state', input.state);
+        formData.append('country', "India");
 
         // Make the POST request to the API
-        fetch('http://localhost:80/api/maps/new-location', {
+        fetch('http://localhost/api/maps/new-location', {
             method: 'POST',
             body: formData,
         }).then(response => {

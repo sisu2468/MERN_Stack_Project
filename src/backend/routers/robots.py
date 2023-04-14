@@ -42,6 +42,9 @@ def get_robot_id():
 # Add a new robot
 @router.post("/new")
 def add_robot(robot: Robot, is_admin: bool = Depends(check_current_admin)):
+    if not is_admin:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                            detail="Unauthorized")
     robot.roboid = get_robot_id()
     if get_robo_by_key(robot.roskey):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
@@ -52,6 +55,9 @@ def add_robot(robot: Robot, is_admin: bool = Depends(check_current_admin)):
 # Endpoint to get all robots
 @router.get("/all")
 def get_robots(request: Request, is_admin: bool = Depends(check_current_admin)):
+    if not is_admin:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                            detail="Unauthorized")
     locations = list(db.robots.find({}, {"_id": 0}))
     if len(locations):
         return ManyRobotsResponse(locations=locations)

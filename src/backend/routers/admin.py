@@ -17,7 +17,7 @@ router = APIRouter()
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 # JWT Authentication
-SECRET_KEY = getenv("JWT_SECRET_KEY", "this_is_my_very_secretive_secret")
+SECRET_KEY = getenv("JWT_SECRET_KEY", "this_is_my_very_secretive_secret") + "_admin"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
