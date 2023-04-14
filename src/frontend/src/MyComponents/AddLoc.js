@@ -64,7 +64,6 @@ export const AddLoc = () => {
     
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log("eifybvc kufyvgul")
         // Create a new FormData object
         const formData = new FormData();
 
@@ -94,11 +93,11 @@ export const AddLoc = () => {
             const token_type = responseData.token_type;
             const role = responseData.role;
             // Do whatever you want with the access token, token type, and role
-            console.log(`Access Token: ${access_token}`);
-            console.log(`Token Type: ${token_type}`);
-            console.log(`Role: ${role}`);
-            localStorage.setItem("loggedin", true)
-            nav("/profile")
+            // console.log(`Access Token: ${access_token}`);
+            // console.log(`Token Type: ${token_type}`);
+            // console.log(`Role: ${role}`);
+            // localStorage.setItem("loggedin", true)
+            // nav("/profile")
         }).catch(error => {
             // Handle the error response
             console.error(error);
