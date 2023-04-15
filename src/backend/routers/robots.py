@@ -18,16 +18,22 @@ class ManyRobotsResponse(BaseModel):
     robots: List[Robot]
 
 def get_robo_by_id(id: int):
-    rb = db.robots.find_one({"roboid": id})
-    if rb:
-        return Robot(**rb)
-    return None
+    try:
+        rb = db.robots.find_one({"roboid": id}, {"_id": 0})
+        if rb:
+            return Robot(**rb)
+        return None
+    except Exception:
+        return None
 
 def get_robo_by_key(key: str):
-    rb = db.robots.find_one({"roskey": key})
-    if rb:
-        return Robot(**rb)
-    return None
+    try:
+        rb = db.robots.find_one({"roskey": key}, {"_id": 0})
+        if rb:
+            return Robot(**rb)
+        return None
+    except Exception:
+        return None
 
 def get_robot_id():
     robo = list(db.robots.find({}, {"roboid": 1, "_id": 0}))

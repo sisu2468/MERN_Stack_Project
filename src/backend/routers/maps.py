@@ -37,18 +37,23 @@ class ManyMapsResponse(BaseModel):
     maps: List[Map] | None
 
 def get_parking_location_by_id(id: int):
-    pl = db.locations.find_one({"locid": id}, {"_id": 0})
-    if pl:
-        return Location(**pl)
-    else:
+    try:
+        pl = db.locations.find_one({"locid": id}, {"_id": 0})
+        if pl:
+            return Location(**pl)
         return None
+    except Exception:
+        return None
+    
 
 
 def get_parking_location_by_pin(pin: int):
-    pl = db.locations.find_one({"pin": pin}, {"_id": 0})
-    if pl:
-        return Location(**pl)
-    else:
+    try:
+        pl = db.locations.find_one({"pin": pin}, {"_id": 0})
+        if pl:
+            return Location(**pl)
+        return None
+    except Exception:
         return None
 
 def get_parking_location_id():
