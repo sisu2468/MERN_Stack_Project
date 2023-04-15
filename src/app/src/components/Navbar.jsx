@@ -261,7 +261,7 @@ function ResponsiveDrawer(props) {
                                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 1 }} disabled={!props.profileSettings}>
                                         {session ?
                                             <Avatar
-                                                alt={data && data.full_name || null}
+                                                alt={(data && data.full_name) || null}
                                                 src="/static/images/avatar/2.jpg"
                                                 sx={{ background: "#070E40" }} /> :
                                             <Avatar />}

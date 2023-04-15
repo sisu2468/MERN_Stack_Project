@@ -12,7 +12,7 @@ import * as Public from "pages/Public";
 import * as ProfileSystem from "pages/Profile";
 import * as MySubGreddiits from "pages/Subgreddiits";
 
-import { HomeOutlined, AccountCircle, Login, FolderShared } from "@mui/icons-material";
+import { HomeOutlined, AccountCircle, Login, EvStation } from "@mui/icons-material";
 
 const publicRoutes = [
     {
@@ -21,12 +21,6 @@ const publicRoutes = [
         icon: HomeOutlined,
         component: <Public.Home />,
         exact: true,
-    },
-    {
-        title: "My Other Pages",
-        path: "/mysubs",
-        icon: FolderShared,
-        component: <MySubGreddiits.MySubGreddiits />,
     },
 ];
 
@@ -47,7 +41,12 @@ const secureRoutes = [
         component: <ProfileSystem.Profile />,
         // exact: true,
     },
-    
+    {
+        title: "Book a Charge",
+        path: "/booking",
+        icon: EvStation,
+        component: <MySubGreddiits.MySubGreddiits />,
+    },
 ];
 
 function App() {
