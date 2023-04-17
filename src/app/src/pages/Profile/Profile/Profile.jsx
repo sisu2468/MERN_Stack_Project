@@ -14,29 +14,11 @@ function createData(id, fname, lname, followerscount, followingcount) {
     return { id, fname, lname, followers, following };
 }
 
-const followinglist = [
-    createData(1, 'Maharnav', 'Singhal', 500, 3),
-    createData(2, 'Tanveer', 'Ul Mustafa', 50, 3000),
-    createData(3, 'Pranav', 'Agarwal', 600, 500),
-    createData(4, 'Divij', '', 300, 250),
-    createData(5, 'Pranav', 'Agrawal', 500, 500),
-];
-
-const followerslist = [
-    createData(1, 'Maharnav', 'Singhal', 500, 3),
-    createData(2, 'Tanveer', 'Ul Mustafa', 50, 3000),
-    createData(3, 'Pranav', 'Agarwal', 600, 500),
-    createData(4, 'Divij', '', 300, 250),
-    createData(5, 'Pranav', 'Agrawal', 500, 500),
-    createData(6, 'Pranav', 'Gupta', 50, 50),
-];
 
 const Profile = () => {
     // navbar
     // const { isTabletOrMobile } = useContext(NavigationContext);
     const { session, data } = useContext(SessionContext);
-    const [followingopen, setFollowingOpen] = useState(false);
-    const [followersopen, setFollowersOpen] = useState(false);
 
     const mystyle = {
         color: "red",
@@ -45,11 +27,12 @@ const Profile = () => {
     };
 
     return (
-        <Page full header={"User Information"} loading={false} empty={false}>
+        <Page loading={false} empty={false}>
             {/* <Divider><Chip label="CHIP" /></Divider> */}
-
+            
             {data &&
                 <>
+                <h1>Hi, {data.full_name}</h1>
                     <Divider
                         sx={{
                             '&.MuiDivider-root': {
@@ -70,26 +53,54 @@ const Profile = () => {
                             <Avatar alt={data.full_name || null} src="/static/images/avatar/2.jpg" sx={{ height: '70px', width: '70px' }} /> :
                             <Avatar sx={{ height: '70px', width: '70px' }} />}
                     </Divider>
-                    <h3>Name: {data.full_name || "ADMIN"} {data.lname || ""}</h3>
+                    <div className="profile_box">
+                    {/* <div class="row">
+                        <div class="col">
+                            <h3>Name: </h3>
+                            <h3>Username: </h3>
+                            <h3>Email: </h3>
+                            <h3>Contact: </h3>
+                        </div>
+                        <div class="col">
+                            <h3>{data.full_name || "user"} {data.lname || ""} </h3>
+                            <h3>{data.username || "admin"} </h3>
+                            <h3>{data.email} </h3>
+                            <h3>{data.contact || "-"} </h3>
+                        </div> */}
+                        <table class="table">
+                        {/* <thead>
+                            <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">First</th>
+                            <th scope="col">Last</th>
+                            <th scope="col">Handle</th>
+                            </tr>
+                        </thead> */}
+                        <tbody>
+                            <tr>
+                            <th scope="row">Name : </th>
+                            <td>{data.full_name || "user"} {data.lname || ""}</td>
+                            </tr>
+                            <tr>
+                            <th scope="row">Username: </th>
+                            <td>{data.username || "admin"}</td>
+                            </tr>
+                            <tr>
+                            <th scope="row">Email : </th>
+                            <td>{data.email}</td>
+                            </tr>
+                            <tr>
+                            <th scope="row">Contact : </th>
+                            <td>{data.contact || "-"}</td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </div>
+                    {/* <h3>Name: {data.full_name || "user"} {data.lname || ""}</h3>
                     <h3>Username: {data.username || "admin"}</h3>
                     <h3>Email: {data.email}</h3>
-                    <h3>Contact: {data.contact || "-"}</h3>
-                    <h3>Age: {data.age || "-"}</h3>
-                    <h3>Followers: <a onClick={() => { setFollowersOpen(true); }} style={mystyle}>{data.followers || followerslist.length || "0"}</a></h3>
-                    <h3>Following: <a onClick={() => { setFollowingOpen(true); }} style={mystyle}>{data.following || followinglist.length || "0"}</a></h3>
-
-                    <ListFollowers
-                        title="Following"
-                        rows={followinglist}
-                        open={followingopen}
-                        setOpen={setFollowingOpen}
-                    />
-                    <ListFollowers
-                        title="Followers"
-                        rows={followerslist}
-                        open={followersopen}
-                        setOpen={setFollowersOpen}
-                    />
+                    <h3>Contact: {data.contact || "-"}</h3> */}
+                    {/* </div> */}
                 </>
             }
         </Page>
