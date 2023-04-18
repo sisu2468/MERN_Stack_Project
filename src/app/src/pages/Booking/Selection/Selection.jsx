@@ -164,14 +164,11 @@ import { useState } from "react";
 
 const LocationDropdowns = ({ locations }) => {
     // States for selected values
-    //   console.log(locations,"uuuuu")
     const [selectedCountry, setSelectedCountry] = useState("");
     const [selectedState, setSelectedState] = useState("");
     const [selectedCity, setSelectedCity] = useState("");
     //   const [selectedFloor, setSelectedFloor] = useState("");
     const [selectedLocation, setSelectedLocation] = useState("");
-    //   console.log("ewfew")
-    //   console.log(locations.locations[0].country, "mmmmmm")
 
     // Filter states, cities, locations, and floors based on selected country, state, and city
     const filteredStates = Array.from(
@@ -282,33 +279,34 @@ const LocationDropdowns = ({ locations }) => {
 
             {/* Floor dropdown */}
             {/* <select
-        className="form-control"
-        value={selectedFloor}
-        onChange={(e) => setSelectedFloor(e.target.value)}
-      >
-        <option value="">Select Floor</option>
-        {filteredFloors.map((floor) =>
-          floor.map((f) => (
-            <option key={f} value={f}>
-              {f}
-            </option>
-          ))
-        )}
-      </select> */}
+                    className="form-control"
+                    value={selectedFloor}
+                    onChange={(e) => setSelectedFloor(e.target.value)}
+                >
+                    <option value="">Select Floor</option>
+                    {filteredFloors.map((floor) =>
+                    floor.map((f) => (
+                        <option key={f} value={f}>
+                        {f}
+                        </option>
+                    ))
+                    )}
+                </select> 
+            */}
         </div>
     );
 };
 
 const Selection = () => {
-    const [locations, setlocations] = useState("");
+    const [locations, setlocations] = useState([]);
     React.useEffect(() => {
         const config = {}
-        axios.get('http://localhost:80/api/maps/locations', config, { port: 80 }).then((response) => {
-            setlocations(response.data);
-            console.log(locations)
-        });
+        axios.get('http://localhost:80/api/maps/locations', config, { port: 80 })
+            .then((response) => {
+                setlocations(response.data);
+                // console.log(locations);
+            });
     }, []);
-    console.log(locations, "ergtertgherh")
 
     return (
         <>
