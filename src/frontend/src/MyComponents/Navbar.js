@@ -1,5 +1,5 @@
 import React from 'react'
-import Profile from '@mui/icons-material/AccountCircle';
+// import Profile from '@mui/icons-material/AccountCircle';
 import { useNavigate } from 'react-router-dom';
 
 export const Navbar = () => {
@@ -29,5 +29,6 @@ export const Navbar = () => {
                     </div>
                 </div>
             </nav>
-        </>)
+        </>
+    )
 }
