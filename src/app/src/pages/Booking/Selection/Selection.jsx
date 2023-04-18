@@ -1,9 +1,7 @@
 import Page from "pages/Page";
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./styles.css";
 import axios from "axios";
-
-import { useState } from "react";
 
 // const locations = [
 //   // Your JSON data here
@@ -304,7 +302,7 @@ const LocationDropdowns = ({ locationsarray }) => {
 const Selection = () => {
   const [locations, setlocations] = useState([]);
   const [loading, setLoading] = useState(true);
-  React.useEffect(() => {
+  useEffect(() => {
     const config = {};
     axios
       .get("http://localhost:80/api/maps/locations", config, { port: 80 })
