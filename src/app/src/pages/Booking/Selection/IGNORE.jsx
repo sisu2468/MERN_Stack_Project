@@ -292,7 +292,7 @@ const LocationDropdowns = ({ locations }) => {
     );
 };
 
-const MySubGreddiits = () => {
+const Selection = () => {
     return (
         <>
             <Page full header={"Slot Booking Portal"} loading={false} empty={false}>
@@ -303,4 +303,4 @@ const MySubGreddiits = () => {
     );
 };
 
-export default MySubGreddiits;
+export default Selection;

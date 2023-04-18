@@ -10,7 +10,7 @@ import { NavigationContext } from "contexts/NavigationContext";
 import { SessionContext } from 'contexts/SessionContext';
 import * as Public from "pages/Public";
 import * as ProfileSystem from "pages/Profile";
-import * as MySubGreddiits from "pages/Subgreddiits";
+import * as Booking from "pages/Booking";
 
 import { HomeOutlined, AccountCircle, Login, EvStation } from "@mui/icons-material";
 
@@ -45,7 +45,7 @@ const secureRoutes = [
         title: "Book a Charge",
         path: "/booking",
         icon: EvStation,
-        component: <MySubGreddiits.MySubGreddiits />,
+        component: <Booking.Selection />,
     },
 ];
 

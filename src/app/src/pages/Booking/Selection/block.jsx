@@ -5,7 +5,7 @@ import React, { useEffect } from "react";
 import "./styles.css";
 import { useHistory } from 'react-router-dom'; // Import useHistory from react-router-dom
 
-const MySubGreddiits = () => {
+const Selection = () => {
 
     const [block_no, setblock_no] = useState(["B1,B2"]) // fetch data from backend using params
     const [finalblock_no, setfinalblock_no] = useState() // stores the final block number
@@ -63,4 +63,4 @@ const MySubGreddiits = () => {
 };
 
 
-export default MySubGreddiits;
+export default Selection;
