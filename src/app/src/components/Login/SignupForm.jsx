@@ -79,7 +79,7 @@ const SignupForm = (props) => {
         }).then(function (response) {
             props.setSession(response);
             props.updateEmail('abc@email.com');
-            handleOnClick("/profile");
+            handleOnClick("/booking");
         }).catch((error) => {
             console.log(error);
             alert("ERROR");
