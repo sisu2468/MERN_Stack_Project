@@ -33,8 +33,7 @@ import { alpha, styled } from '@mui/material/styles';
 // }));
 
 const validationSchema = Yup.object({
-    fname: Yup.string('Enter your first name').required('Required'),
-    lname: Yup.string('Enter your last name').notRequired('Optional'),
+    full_name: Yup.string('Enter your full name').required('Required'),
     username: Yup.string('Enter your username').required('Required'),
     email: Yup
         .string('Enter your email')
@@ -43,11 +42,6 @@ const validationSchema = Yup.object({
     password: Yup
         .string('Enter your password')
         .min(5, 'Password should be of minimum 5 characters length')
-        .required('Required'),
-    age: Yup
-        .number('Enter your age')
-        .moreThan(5)
-        .lessThan(150)
         .required('Required'),
     contact: Yup.string()
         .phone("IN")
@@ -79,7 +73,7 @@ const SignupForm = (props) => {
         }).then(function (response) {
             props.setSession(response);
             props.updateEmail('abc@email.com');
-            handleOnClick("/booking");
+            handleOnClick("/profile");
         }).catch((error) => {
             console.log(error);
             alert("ERROR");
@@ -91,12 +85,10 @@ const SignupForm = (props) => {
 
     const formik = useFormik({
         initialValues: {
-            fname: '',
-            lname: '',
+            full_name: '',
             email: props.email,
             username: '',
             password: '',
-            age: '18',
             contact: ''
         },
         validationSchema: validationSchema,
@@ -113,33 +105,16 @@ const SignupForm = (props) => {
                         <Box mb={2}>
                             <TextField
                                 // fullWidth
-                                id="fname"
-                                name="fname"
-                                label="First Name"
+                                id="full_name"
+                                name="full_name"
+                                label="Full Name"
                                 variant="outlined"
                                 sx={{ "&:before:content": "❌ " }}
-                                value={formik.values.fname}
+                                value={formik.values.full_name}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
-                                error={formik.touched.fname && Boolean(formik.errors.fname)}
-                                helperText={formik.touched.fname && Boolean(formik.errors.fname) && ("❌ " + formik.errors.fname)}
-                            />
-                        </Box>
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                        <Box mb={2}>
-                            <TextField
-                                // fullWidth
-                                id="lname"
-                                name="lname"
-                                label="Last Name"
-                                variant="outlined"
-                                sx={{ "&:before:content": "❌ " }}
-                                value={formik.values.lname}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                error={formik.touched.lname && Boolean(formik.errors.lname)}
-                                helperText={formik.touched.lname && Boolean(formik.errors.lname) && ("❌ " + formik.errors.lname)}
+                                error={formik.touched.full_name && Boolean(formik.errors.full_name)}
+                                helperText={formik.touched.full_name && Boolean(formik.errors.full_name) && ("❌ " + formik.errors.full_name)}
                             />
                         </Box>
                     </Grid>
@@ -214,25 +189,6 @@ const SignupForm = (props) => {
                             />
                         </Box>
                     </Grid>
-                    <Grid item xs={12} md={6}>
-                        <Box mb={2}>
-                            <TextField
-                                // fullWidth
-                                id="age"
-                                name="age"
-                                label="Age"
-                                type="number"
-                                variant="outlined"
-                                sx={{ "&:before:content": "❌ " }}
-                                value={formik.values.age}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                error={formik.touched.age && Boolean(formik.errors.age)}
-                                helperText={formik.touched.age && Boolean(formik.errors.age) && ("❌ " + formik.errors.age)}
-                            />
-                        </Box>
-                    </Grid>
-
                 </Grid>
                 <Button color="primary" variant="contained" fullWidth type="submit">
                     Submit
