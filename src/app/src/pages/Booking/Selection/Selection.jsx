@@ -322,9 +322,11 @@ const Selection = () => {
         <LocationDropdowns locationsarray={locations} />
         <br />
         <center>
-          <button type="button" className="btn btn-success">
-            Book
-          </button>
+          {loading ? null : (
+            <button type="button" className="btn btn-success">
+              Book
+            </button>
+          )}
         </center>
       </Page>
     </>
