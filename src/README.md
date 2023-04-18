@@ -17,8 +17,8 @@ The, Run:-
 ~~Now, you can go to `localhost:3000` to see the frontend running. Also, the backend would be running at `localhost:80`.~~
 
 Now, you can check out all the things at a single port (`80`) ==> <br/>
-For the mobile app, the website could be checked at `localhost/app` (This website would be running inside the application).<br/>
-For the admin console, the website could be checked ta `localhost`. <br/>
+For the mobile app, the website could be checked at `localhost/` (This website would be running inside the application).<br/>
+For the admin console, the website could be checked ta `localhost/admin`. <br/>
 For the backend, it could be checked at its url at `localhost/api`.
 
 If you want to connect to mongodb directly via third party application, it would be running at port `27017`, and you can get your username and password for mongo in the `.env` file.

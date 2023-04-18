@@ -12,33 +12,31 @@ import { Profile } from './MyComponents/Profile';
 
 
 function App() {
-  return (
-    <>
-    <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<ProtectedRoute />}>
-            {/* protecting from going anywhere but login */}
-            <Route path='/' element={<Navbar />}></Route>
-            <Route path='/addLocation' element={<AddLoc />}></Route>
-            <Route path='/addRobot' element={<AddRobot />}></Route>
-            <Route path='/profile' element={<Profile />}></Route>
-            {/* <Route path='/profile' element={<Profile />}></Route>
-            <Route path='/mySubGreddiit' element={<My_SubGreddiit />}></Route>
-            <Route path='/createSubGreddiit' element={<Post_SubGreddiit />}></Route>
-            <Route path='/subGreddiit' element={<SubGreddiit />}></Route>
-            <Route path='/user/:id' element={<Posts />}></Route>
-            <Route path='/savedPosts' element={<SavedPosts />}></Route>
-            <Route path='/user-update' element={<UpdateProfile />}></Route>
-            <Route path='/mysub/:id' element={<In_My_Sub />}></Route> */}
-        </Route>
-        <Route path="/" element={<ProtectLogin />}>
-          {/* protecting from going to login */}
-          <Route path='/login' element={<SignIn />}></Route>
-        </Route>
-      </Routes>
-    </BrowserRouter>
-    </>
-  );
+    return (
+        <BrowserRouter basename={"/admin"}>
+            <Routes>
+                <Route path="/" element={<ProtectedRoute />}>
+                    {/* protecting from going anywhere but login */}
+                    <Route path='/' element={<Navbar />}></Route>
+                    <Route path='/addLocation' element={<AddLoc />}></Route>
+                    <Route path='/addRobot' element={<AddRobot />}></Route>
+                    <Route path='/profile' element={<Profile />}></Route>
+                    {/* <Route path='/profile' element={<Profile />}></Route>
+                    <Route path='/mySubGreddiit' element={<My_SubGreddiit />}></Route>
+                    <Route path='/createSubGreddiit' element={<Post_SubGreddiit />}></Route>
+                    <Route path='/subGreddiit' element={<SubGreddiit />}></Route>
+                    <Route path='/user/:id' element={<Posts />}></Route>
+                    <Route path='/savedPosts' element={<SavedPosts />}></Route>
+                    <Route path='/user-update' element={<UpdateProfile />}></Route>
+                    <Route path='/mysub/:id' element={<In_My_Sub />}></Route> */}
+                </Route>
+                <Route path="/" element={<ProtectLogin />}>
+                    {/* protecting from going to login */}
+                    <Route path='/login' element={<SignIn />}></Route>
+                </Route>
+            </Routes>
+        </BrowserRouter>
+    );
 }
 
 export default App;

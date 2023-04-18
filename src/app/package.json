@@ -5,7 +5,6 @@
   "version": "1.0.0",
   "main": "src/index.js",
   "private": true,
-  "homepage": "/app",
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",

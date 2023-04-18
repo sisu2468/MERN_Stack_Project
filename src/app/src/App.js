@@ -65,7 +65,7 @@ function App() {
 
     return (
         <ThemeProvider theme={Theme}>
-            <BrowserRouter basename={"/app"}>
+            <BrowserRouter>
                 <Switch>
                     {/* <Navbar /> */}
                     {publicRoutes.map((route, idx) => (
