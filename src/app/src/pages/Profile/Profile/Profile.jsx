@@ -51,7 +51,7 @@ const Profile = () => {
                             startIcon={<Edit />}
                             onClick={openform}
                         >
-                            Edit
+                            Change Password
                         </Button>
                     </Grid>
                     <div className="profile_box">
