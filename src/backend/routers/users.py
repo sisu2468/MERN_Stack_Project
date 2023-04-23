@@ -9,6 +9,7 @@ from jose import JWTError, jwt
 from os import getenv
 
 from db import db
+from utils import send_email_async, send_email_background, random_generator
 
 router = APIRouter()
 
@@ -158,7 +159,7 @@ async def register(response: Response, user: User, access_token: str = Depends(c
         response.delete_cookie('session_cookie_key')
         headers = {"set-cookie": response.headers["set-cookie"]}
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
-                            detail="Email already registered", headers = headers)
+                            detail="Email already registered", headers=headers)
     # Create User and Return Response
     user_id = create_user(user)
     # return {"user_id": user_id}
@@ -178,7 +179,7 @@ async def login(response: Response, form_data: OAuth2PasswordRequestForm = Depen
         response.delete_cookie('session_cookie_key')
         headers = {"set-cookie": response.headers["set-cookie"]}
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-                            detail="Invalid username or password", headers = headers)
+                            detail="Invalid username or password", headers=headers)
     # Create Access Token and Set Cookie
     new_access_token = create_access_token(data={"sub": user.username})
     response.set_cookie(key="access_token",
@@ -219,8 +220,12 @@ async def change_password(response: Response, passwords: ChangePasswordInput, cu
                             detail="Invalid password")
 
     hashed_new_password = get_password_hash(passwords.new_password)
-    db.users.update_one({"username": current_user.username}, {
+    result = db.users.update_one({"username": current_user.username}, {
                         "$set": {"password": hashed_new_password}})
+    
+    if not result.modified_count:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to update password")
 
     # Create Access Token and Set Cookie
     new_access_token = create_access_token(data={"sub": user.username})
@@ -228,3 +233,35 @@ async def change_password(response: Response, passwords: ChangePasswordInput, cu
                         value=new_access_token, httponly=True)
 
     return {"message": "Password changed successfully!"}
+
+
+@router.post("/forget-password")
+async def forget_password(email: str, access_token: str = Depends(check_current_user)):
+    if access_token:
+        raise HTTPException(status_code=400, detail="Already Logged In!")
+
+    user = get_user_by_email(email)
+
+    if user == None:
+        raise HTTPException(status_code=400, detail="This email doesn't exist")
+
+    new_password = random_generator(15)
+
+    hashed_new_password = get_password_hash(new_password)
+    result = db.users.update_one({"email": email}, {
+                        "$set": {"password": hashed_new_password}})
+    
+    if not result.modified_count:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Server Error")
+
+    await send_email_async('Forget Password', email,
+                           {
+                               'title': 'Forget Password',
+                               'name': user.full_name,
+                               'text': """Please use the below password as your new password. 
+You can change your password once you login into the app/website.""",
+                               'maintext': new_password
+                           })
+    
+    return {"message": "Sent Mail Successfully!"}
