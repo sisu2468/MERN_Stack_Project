@@ -64,9 +64,9 @@ def get_robots(request: Request, is_admin: bool = Depends(check_current_admin)):
     if not is_admin:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                             detail="Unauthorized")
-    locations = list(db.robots.find({}, {"_id": 0}))
-    if len(locations):
-        return ManyRobotsResponse(locations=locations)
+    robots = list(db.robots.find({}, {"_id": 0}))
+    if len(robots):
+        return ManyRobotsResponse(robots=robots)
     return None
 
 """
