@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Depends, Response, status, Cookie, Request
+from fastapi import APIRouter, HTTPException, Depends, Response, status, Cookie, Request, Body
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from pydantic import BaseModel, EmailStr
 from typing import Optional
@@ -236,7 +236,7 @@ async def change_password(response: Response, passwords: ChangePasswordInput, cu
 
 
 @router.post("/forget-password")
-async def forget_password(email: str, access_token: str = Depends(check_current_user)):
+async def forget_password(email: str = Body(..., embed=True), access_token: str = Depends(check_current_user)):
     if access_token:
         raise HTTPException(status_code=400, detail="Already Logged In!")
 
