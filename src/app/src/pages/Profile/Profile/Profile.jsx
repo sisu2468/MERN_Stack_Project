@@ -44,7 +44,7 @@ const Profile = () => {
                             <Avatar alt={data.full_name || null} src="/static/images/avatar/2.jpg" sx={{ height: '70px', width: '70px' }} /> :
                             <Avatar sx={{ height: '70px', width: '70px' }} />}
                     </Divider>
-                    <Grid container justifyContent="flex-end">
+                    <Grid container justifyContent="flex-end" mb={2}>
                         <Button
                             color="inherit"
                             variant="contained"

@@ -11,27 +11,19 @@ const validationSchema = Yup.object({
         .min(5, 'Password should be of minimum 5 characters length')
         .required('Required'),
     new_password: Yup
-        .string('Enter your password')
+        .string('Enter your new password')
         .min(5, 'Password should be of minimum 5 characters length')
         .required('Required')
 });
 
 const Edit_Form = (props) => {
     const handleSubmit = async () => {
-        var formBody = [];
-        for (var property in formik.values) {
-            var encodedKey = encodeURIComponent(property);
-            var encodedValue = encodeURIComponent(formik.values[property]);
-            formBody.push(encodedKey + "=" + encodedValue);
-        }
-        formBody = formBody.join("&");
-
         fetch('/api/auth/change-password', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+                'Content-Type': 'application/json;'
             },
-            body: formBody
+            body: JSON.stringify(formik.values)
         }).then((response) => {
             if (!response.ok) throw new Error(response.status);
             else return response.json();
