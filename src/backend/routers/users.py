@@ -42,9 +42,16 @@ class UserLoginResponse(BaseModel):
     access_token: str
     token_type: str
 
+# Change Password Input Model
+class ChangePasswordInput(BaseModel):
+    current_password: str
+    new_password: str
 
 # Hash password using bcrypt
 def get_password_hash(password: str):
+    if len(password) < 6:
+        raise HTTPException(
+            status_code=400, detail="Password should be atleast 6 characters long")
     return pwd_context.hash(password)
 
 
@@ -143,11 +150,15 @@ async def register(response: Response, user: User, access_token: str = Depends(c
         response.delete_cookie("access_token")
     # Check if user already exists
     if get_user_by_username(user.username):
+        response.delete_cookie('session_cookie_key')
+        headers = {"set-cookie": response.headers["set-cookie"]}
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
-                            detail="Username already registered")
+                            detail="Username already registered", headers=headers)
     if get_user_by_email(user.email):
+        response.delete_cookie('session_cookie_key')
+        headers = {"set-cookie": response.headers["set-cookie"]}
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
-                            detail="Email already registered")
+                            detail="Email already registered", headers = headers)
     # Create User and Return Response
     user_id = create_user(user)
     # return {"user_id": user_id}
@@ -164,8 +175,10 @@ async def login(response: Response, form_data: OAuth2PasswordRequestForm = Depen
         response.delete_cookie("access_token")
     user = authenticate_user(form_data.username, form_data.password)
     if not user:
+        response.delete_cookie('session_cookie_key')
+        headers = {"set-cookie": response.headers["set-cookie"]}
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-                            detail="Invalid username or password")
+                            detail="Invalid username or password", headers = headers)
     # Create Access Token and Set Cookie
     new_access_token = create_access_token(data={"sub": user.username})
     response.set_cookie(key="access_token",
@@ -186,7 +199,6 @@ async def check_user(request: Request, access_token: str = Depends(check_current
                             detail="Unauthorized")
     return {"access_token": access_token, "token_type": "bearer"}
 
-
 # User Logout
 @router.post("/logout")
 async def logout(request: Request, response: Response, current_user: User = Depends(get_current_user)):
@@ -195,3 +207,24 @@ async def logout(request: Request, response: Response, current_user: User = Depe
     # response.delete_cookie("access_token", domain="localhost")
     response.delete_cookie("access_token")
     return {"message": "Logged Out Successfully"}
+
+# Change Password
+@router.post("/change-password")
+async def change_password(response: Response, passwords: ChangePasswordInput, current_user: User = Depends(get_current_user)):
+    if current_user:
+        response.delete_cookie("access_token")
+    user = authenticate_user(current_user.username, passwords.current_password)
+    if not user:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                            detail="Invalid password")
+
+    hashed_new_password = get_password_hash(passwords.new_password)
+    db.users.update_one({"username": current_user.username}, {
+                        "$set": {"password": hashed_new_password}})
+
+    # Create Access Token and Set Cookie
+    new_access_token = create_access_token(data={"sub": user.username})
+    response.set_cookie(key="access_token",
+                        value=new_access_token, httponly=True)
+
+    return {"message": "Password changed successfully!"}
