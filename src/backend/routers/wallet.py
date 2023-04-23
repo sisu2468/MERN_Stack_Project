@@ -35,20 +35,14 @@ class TPINAmtInput(BaseModel):
     amount: float = 0
 
 # Helper function to hash TPIN
-
-
 def hash_tpin(tpin: str):
     return pwd_context.hash(tpin)
 
 # Helper function to verify TPIN
-
-
 def verify_tpin(tpin: str, hashed_tpin: str):
     return pwd_context.verify(tpin, hashed_tpin)
 
 # Get Wallet from MongoDB by Username
-
-
 def get_wallet_by_username(username: str):
     try:
         wallet = db.wallets.find_one({"username": username}, {"_id": 0})
@@ -60,8 +54,6 @@ def get_wallet_by_username(username: str):
         return None
 
 # Authenticate User Wallet by Username and TPIN
-
-
 def authenticate_wallet(username: str, tpin: str):
     wallet = get_wallet_by_username(username)
     if not wallet:
@@ -72,8 +64,6 @@ def authenticate_wallet(username: str, tpin: str):
     return wallet
 
 # Helper function to check wallet amount
-
-
 def check_wallet_amount(amount: float):
     if amount < 0:
         raise HTTPException(
@@ -83,8 +73,6 @@ def check_wallet_amount(amount: float):
             status_code=status.HTTP_400_BAD_REQUEST, detail="Amount more than permissible value")
 
 # Helper to update the amount in wallet db
-
-
 def update_wallet_amount(amount: float, username: str):
     result = db.wallets.update_one({"username": username}, {
         "$set": {"amount": amount}})
@@ -94,8 +82,6 @@ def update_wallet_amount(amount: float, username: str):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to update balance")
 
 # API to create a wallet
-
-
 @router.post("/new-wallet", status_code=status.HTTP_201_CREATED)
 def create_wallet(request: Request, input: TPINInput, user: User = Depends(get_current_user)):
     # Hash the TPIN
@@ -121,8 +107,6 @@ def create_wallet(request: Request, input: TPINInput, user: User = Depends(get_c
     return {"message": "Wallet created successfully!"}
 
 # API to check wallet balance
-
-
 @router.get("/balance")
 def get_wallet_balance(request: Request, tpin: str, user: User = Depends(get_current_user)):
     wallet = authenticate_wallet(user.username, tpin)
@@ -136,8 +120,6 @@ def get_wallet_balance(request: Request, tpin: str, user: User = Depends(get_cur
     return {"balance": balance}
 
 # API to add money
-
-
 @router.post("/add")
 def add_wallet_money(request: Request, input: TPINAmtInput, user: User = Depends(get_current_user)):
     wallet = authenticate_wallet(user.username, input.tpin)
@@ -153,8 +135,6 @@ def add_wallet_money(request: Request, input: TPINAmtInput, user: User = Depends
     return {"balance": new_amount}
 
 # API to deduct amount from wallet
-
-
 @router.post("/deduct")
 def deduct_wallet_money(request: Request, input: TPINAmtInput, user: User = Depends(get_current_user)):
     wallet = authenticate_wallet(user.username, input.tpin)
@@ -170,8 +150,6 @@ def deduct_wallet_money(request: Request, input: TPINAmtInput, user: User = Depe
     return {"balance": new_amount}
 
 # API to delete wallet
-
-
 @router.delete("/delete")
 async def delete_wallet(request: Request, input: TPINInput, user: User = Depends(get_current_user)):
     wallet = authenticate_wallet(user.username, input.tpin)

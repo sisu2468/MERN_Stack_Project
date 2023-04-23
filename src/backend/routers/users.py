@@ -23,8 +23,6 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 120
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login")
 
 # User Model
-
-
 class User(BaseModel):
     username: str
     email: EmailStr
@@ -102,8 +100,6 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     return encoded_jwt
 
 # Dependency for User Authentication
-
-
 async def get_current_user(request: Request, access_token: str = Cookie(None)):
     if access_token == None:
         raise HTTPException(status_code=401, detail="Not Authenticated")
@@ -123,7 +119,7 @@ async def get_current_user(request: Request, access_token: str = Cookie(None)):
         raise HTTPException(
             status_code=401, detail="Invalid authentication credentials")
 
-
+# Function to check the current user is logged in or not
 async def check_current_user(request: Request, access_token: str = Cookie(None)):
     if access_token == None:
         return None
@@ -141,8 +137,6 @@ async def check_current_user(request: Request, access_token: str = Cookie(None))
         return None
 
 # User Registration Endpoint
-
-
 @router.post("/register", status_code=status.HTTP_201_CREATED, response_model=UserLoginResponse)
 async def register(response: Response, user: User, access_token: str = Depends(check_current_user)):
     if access_token:
@@ -164,8 +158,6 @@ async def register(response: Response, user: User, access_token: str = Depends(c
     return {"access_token": access_token, "token_type": "bearer"}
 
 # User Login Endpoint
-
-
 @router.post("/login", response_model=UserLoginResponse)
 async def login(response: Response, form_data: OAuth2PasswordRequestForm = Depends(), access_token: str = Depends(check_current_user)):
     if access_token:
@@ -182,13 +174,11 @@ async def login(response: Response, form_data: OAuth2PasswordRequestForm = Depen
     return {"access_token": new_access_token, "token_type": "bearer"}
 
 # Get Current User Endpoint
-
-
 @router.get("/details")
 async def read_users_me(request: Request, current_user: User = Depends(get_current_user)):
     return current_user
 
-
+# Get current user or not
 @router.get("/current", response_model=UserLoginResponse)
 async def check_user(request: Request, access_token: str = Depends(check_current_user)):
     if not access_token:
@@ -198,7 +188,6 @@ async def check_user(request: Request, access_token: str = Depends(check_current
 
 
 # User Logout
-
 @router.post("/logout")
 async def logout(request: Request, response: Response, current_user: User = Depends(get_current_user)):
     # Also tried following two comment lines

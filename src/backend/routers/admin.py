@@ -17,7 +17,8 @@ router = APIRouter()
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 # JWT Authentication
-SECRET_KEY = getenv("JWT_SECRET_KEY", "this_is_my_very_secretive_secret") + "_admin"
+SECRET_KEY = getenv(
+    "JWT_SECRET_KEY", "this_is_my_very_secretive_secret") + "_admin"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
@@ -110,8 +111,6 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     return encoded_jwt
 
 # Dependency for Admin Authentication
-
-
 async def get_current_admin(request: Request, access_token: str = Cookie(None)):
     if access_token == None:
         raise HTTPException(status_code=401, detail="Not Authenticated")
@@ -130,7 +129,7 @@ async def get_current_admin(request: Request, access_token: str = Cookie(None)):
     except JWTError:
         raise HTTPException(
             status_code=401, detail="Invalid authentication credentials")
-    
+
 
 async def check_current_admin(request: Request, access_token: str = Cookie(None)):
     if access_token == None:
@@ -149,8 +148,6 @@ async def check_current_admin(request: Request, access_token: str = Cookie(None)
         return False
 
 # Admin Registration Endpoint
-
-
 @router.post("/new", status_code=status.HTTP_201_CREATED, response_model=AdminLoginResponse)
 async def register(response: Response, admin: Admin):
     # Check if admin already exists
@@ -170,8 +167,6 @@ async def register(response: Response, admin: Admin):
     return {"access_token": access_token, "token_type": "bearer", "role": admin.role}
 
 # Admin Login Endpoint
-
-
 @router.post("/login", response_model=AdminLoginResponse)
 async def login(response: Response, form_data: OAuth2PasswordRequestForm = Depends()):
     admin = authenticate_admin(form_data.username, form_data.password)
