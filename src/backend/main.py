@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Request
 from os import getenv
-from routers import users, admin, maps, robots
+from routers import users, admin, maps, robots, wallet
 
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.middleware import SlowAPIMiddleware
@@ -50,3 +50,4 @@ app.include_router(users.router, prefix="/auth", tags=["auth"])
 app.include_router(admin.router, prefix="/admin/auth", tags=["admin/auth"])
 app.include_router(maps.router, prefix="/maps", tags=["parking_locations_and_maps"])
 app.include_router(robots.router, prefix="/robots", tags=["robots"])
+app.include_router(wallet.router, prefix="/wallet", tags=["wallet"])
