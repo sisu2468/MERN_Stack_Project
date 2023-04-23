@@ -64,9 +64,9 @@ const SignupForm = (props) => {
         fetch('/api/auth/register', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+                'Content-Type': 'application/json'
             },
-            body: formBody
+            body: JSON.stringify(formik.values)
         }).then((response) => {
             if (!response.ok) throw new Error(response.status);
             else return response.json();
