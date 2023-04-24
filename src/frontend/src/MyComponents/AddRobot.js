@@ -7,10 +7,10 @@ export const AddRobot = () => {
         remarks: "",
         roskey: ""
     });
-    const  { remarks, roskey} = reg;
+    const { remarks, roskey } = reg;
 
-    const onchanger = e => setreg({ ...reg, [e.target.name]: e.target.value});
-    const handleSubmit =  async (e) => {
+    const onchanger = e => setreg({ ...reg, [e.target.name]: e.target.value });
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const bdy = JSON.stringify(reg);
         fetch('http://localhost:80/api/robots/new', {
@@ -22,7 +22,7 @@ export const AddRobot = () => {
         }).then(response => {
             if (response.ok) {
                 return response.json();
-                
+
             } else {
                 throw new Error(`Error: ${response.status} - ${response.statusText}`);
             }
@@ -45,10 +45,6 @@ export const AddRobot = () => {
                     <div className="card-body">
                         <h5 className="card-title my-3">Add new Robot</h5>
                         <form method='post'>
-                            {/* <div className="mb-3 my-3">
-                                <label htmlFor="exampleInputEmail1" className="form-label">Robot ID</label>
-                                <input type="number" placeholder="ID" className="form-control" required id="exampleInputEmail2" aria-describedby="emailHelp" name="roboid" value={roboid} onChange={e => onchanger(e)} />
-                            </div> */}
                             <div className="row g-3">
                                 <div className="col">
                                     <label htmlFor="exampleInputEmail2">ROS Key</label>
@@ -60,7 +56,7 @@ export const AddRobot = () => {
                                 </div>
                             </div>
                             <div className="my-3 text-center">
-                                <button type="submit" className="btn btn-success mx-1"  onClick={handleSubmit}>
+                                <button type="submit" className="btn btn-success mx-1" onClick={handleSubmit}>
                                     Add
                                 </button>
                             </div>
