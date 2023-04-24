@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { json } from 'react-router-dom';
 import { Navbar } from './Navbar';
 
 //   import * as React from "react";
@@ -6,12 +7,17 @@ import { Navbar } from './Navbar';
 export const AddLoc = () => {
     // const navigate = useNavigate()
     const [input, setInput] = useState({
+        locid: 0,
         name: "",
         city: "",
         pin_code: "",
         landmark: "",
-        state: ""
+        state: "",
+        country: ""
     })
+    const  {name, city, pin_code, landmark, state, country} = input;
+
+    const onchanger = e => setInput({ ...input, [e.target.name]: e.target.value});
     function refreshPage() {
         window.location.reload();
     }
@@ -64,40 +70,33 @@ export const AddLoc = () => {
     
     const handleSubmit = (event) => {
         event.preventDefault();
-        // Create a new FormData object
-        const formData = new FormData();
 
-        // Append the input values to the formData object
-        formData.append('locid', 0);
-        formData.append('name', input.name);
-        formData.append('city', input.city);
-        formData.append('pin_code', input.pin_code);
-        formData.append('landmark', input.landmark);
-        formData.append('state', input.state);
-        formData.append('country', "India");
-
+        const something = JSON.stringify(input)
         // Make the POST request to the API
         fetch('http://localhost/api/maps/new-location', {
             method: 'POST',
-            body: formData,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: something,
         }).then(response => {
             if (response.ok) {
                 // Extract the response data
+                console.log("ok")
                 return response.json();
             } else {
                 throw new Error(`Error: ${response.status} - ${response.statusText}`);
             }
         }).then(responseData => {
-            // Access the access token, token type, and role from the response data
-            const access_token = responseData.access_token;
-            const token_type = responseData.token_type;
-            const role = responseData.role;
-            // Do whatever you want with the access token, token type, and role
-            // console.log(`Access Token: ${access_token}`);
-            // console.log(`Token Type: ${token_type}`);
-            // console.log(`Role: ${role}`);
-            // localStorage.setItem("loggedin", true)
-            // nav("/profile")
+            setInput({
+                locid: 0,
+                name: "",
+                city: "",
+                pin_code: "",
+                landmark: "",
+                state: "",
+                country: ""
+            });
         }).catch(error => {
             // Handle the error response
             console.error(error);
@@ -113,35 +112,51 @@ export const AddLoc = () => {
                 <div className="card-body">
                     <h5 className="card-title my-3">Add new Location</h5>
                     <form method='post'>
-                        <div className="col">
-                            <input type="text" className="form-control" placeholder="State" aria-label="First name" required name="fname" value={input.state} onChange={(e) => setInput({ ...input, [e.target.name]: e.target.value })} />
-                        </div>
                         <div className="mb-3 my-3">
-                            <label htmlFor="exampleInputEmail1" className="form-label">City</label>
-                            <input type="email" placeholder="City" className="form-control" required id="exampleInputEmail2" aria-describedby="emailHelp" name="email" value={input.city} onChange={(e) => setInput({ ...input, [e.target.name]: e.target.value })} />
+                            <label htmlFor="exampleInputEmail1" className="form-label">Country</label>
+                            <input type="text" placeholder="Country" className="form-control" required id="exampleInputEmail2" aria-describedby="emailHelp" name="country" value={input.country} onChange={e => onchanger(e)} />
                         </div>
                         <div className="row g-3">
+                        <div className="col">
+                                <label htmlFor="exampleInputEmail1">State</label>
+                                <input type="text" required className="form-control" placeholder="State" aria-label="Mobile No." name="state" value={input.state} onChange={e => onchanger(e)} />
+                            </div>
                             <div className="col">
                                 <label htmlFor="exampleInputEmail2">Pincode</label>
-                                <input type="number" required className="form-control" placeholder="Pincode" aria-label="Age" name="age" value={input.pin_code} onChange={(e) => setInput({ ...input, [e.target.name]: e.target.value })} />
+                                <input type="number" required className="form-control" placeholder="Pincode" aria-label="pin_code" name="pin_code" value={input.pin_code} onChange={e => onchanger(e)} />
                             </div>
-                            <div className="col">
-                                <label htmlFor="exampleInputEmail1">Landmark</label>
-                                <input type="text" required className="form-control" placeholder="Landmark" aria-label="Mobile No." name="number" value={input.landmark} onChange={(e) => setInput({ ...input, [e.target.name]: e.target.value })} />
-                            </div>
+                            
+                        </div>
+                        <div className="col">
+                                <label htmlFor="exampleInputEmail2">City</label>
+                                <input type="text" required className="form-control" placeholder="City" aria-label="city" name="city" value={input.city} onChange={e => onchanger(e)} />
                         </div>
                         <div className="form-group my-3">
-                            <label htmlFor="exampleInputEmail3">Name of Place</label>
+                            <label htmlFor="exampleInputEmail3">Landmark</label>
                             <input
                                 type="text"
                                 className="form-control"
                                 id="exampleInputEmail3"
                                 aria-describedby="emailHelp"
-                                placeholder="Place"
+                                placeholder="Landmark"
                                 required
-                                name="username"
+                                name="landmark"
+                                value={input.landmark}
+                                onChange={e => onchanger(e)}
+                            />
+                        </div>
+                        <div className="form-group my-3">
+                            <label htmlFor="exampleInputEmail3">Name</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="exampleInputEmail3"
+                                aria-describedby="emailHelp"
+                                placeholder="Name of Place"
+                                required
+                                name="name"
                                 value={input.name}
-                                onChange={(e) => setInput({ ...input, [e.target.name]: e.target.value })}
+                                onChange={e => onchanger(e)}
                             />
                         </div>
                         <div className="my-3 text-center">

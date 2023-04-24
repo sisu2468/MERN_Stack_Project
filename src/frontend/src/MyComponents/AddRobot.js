@@ -13,7 +13,6 @@ export const AddRobot = () => {
     const handleSubmit =  async (e) => {
         e.preventDefault();
         const bdy = JSON.stringify(reg);
-        console.log(reg,bdy);
         fetch('http://localhost:80/api/robots/new', {
             method: 'POST',
             headers: {
