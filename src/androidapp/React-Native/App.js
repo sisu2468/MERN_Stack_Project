@@ -15,7 +15,7 @@ function App() {
             />
             <WebView
                 source={{ uri: "https://greddiit.vercel.app" }}
-                // source={{ uri: "http://10.1.133.241:80/app" }}
+                // source={{ uri: "http://10.1.133.241:80/" }}
                 style={{ marginTop: 30 }}
                 setBuiltInZoomControls={false}
                 javaScriptEnabled

@@ -1,10 +1,8 @@
 import { useContext, useEffect } from "react";
-// import { useState } from "react";
 import { Box, Modal, Button, Typography } from "@mui/material";
 
 import Page from "pages/Page";
 
-// navbar
 import { NavigationContext } from "contexts/NavigationContext";
 
 import Login from "components/Login";
@@ -22,7 +20,6 @@ const style = {
 };
 
 const LoginPage = () => {
-    // navbar
     const { loginopen, setLoginopen } = useContext(NavigationContext);
     useEffect(() => { setLoginopen(true); }, []);
 

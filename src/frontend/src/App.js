@@ -21,14 +21,6 @@ function App() {
                     <Route path='/addLocation' element={<AddLoc />}></Route>
                     <Route path='/addRobot' element={<AddRobot />}></Route>
                     <Route path='/profile' element={<Profile />}></Route>
-                    {/* <Route path='/profile' element={<Profile />}></Route>
-                    <Route path='/mySubGreddiit' element={<My_SubGreddiit />}></Route>
-                    <Route path='/createSubGreddiit' element={<Post_SubGreddiit />}></Route>
-                    <Route path='/subGreddiit' element={<SubGreddiit />}></Route>
-                    <Route path='/user/:id' element={<Posts />}></Route>
-                    <Route path='/savedPosts' element={<SavedPosts />}></Route>
-                    <Route path='/user-update' element={<UpdateProfile />}></Route>
-                    <Route path='/mysub/:id' element={<In_My_Sub />}></Route> */}
                 </Route>
                 <Route path="/" element={<ProtectLogin />}>
                     {/* protecting from going to login */}

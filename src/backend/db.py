@@ -16,3 +16,6 @@ client = MongoClient(MONGO_URI)
 
 # get database
 db = client[MONGO_DATABASE]
+
+# To create unique key checking (by default in databse scheme itself)
+# db.wallets.create_index([("username", 1)], unique=True, name="unique_wallets")

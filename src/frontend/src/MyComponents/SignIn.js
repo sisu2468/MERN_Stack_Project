@@ -6,9 +6,7 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
-// import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-// import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -35,57 +33,6 @@ const SignIn = () => {
         password: "",
     });
     const nav = useNavigate();
-
-    // const handleSubmit = (event) => {
-    //   event.preventDefault();
-    //   const data = new FormData(event.currentTarget);
-    //   // console.log({
-    //   //   username: data.get('Username'),
-    //   //   password: data.get('password'),
-    //   // });
-
-    //   console.log(input.username, input.password)
-    //   console.log("username, password")
-
-    //   const url = "http://localhost:80/api/admin/auth/login";  // The URL of your API endpoint
-    //   const username = "your_username";  // The username for sign-in
-    //   const password = "your_password";  // The password for sign-in
-
-    //   // Prepare the request data
-    //   data.append("username", input.username);
-    //   data.append("password", input.password);
-
-    //   // Make the POST request to the API
-    //   fetch(url, {
-    //     method: "POST",
-    //     body: data
-    //   })
-    //     .then(response => {
-    //       if (response.ok) {
-    //         // Extract the response data
-    //         return response.json();
-    //       } else {
-    //         throw new Error(`Error: ${response.status} - ${response.statusText}`);
-    //       }
-    //     })
-    //     .then(responseData => {
-    //       // Access the access token, token type, and role from the response data
-    //       const access_token = responseData.access_token;
-    //       const token_type = responseData.token_type;
-    //       const role = responseData.role;
-    //       // localStorage.setItem('token',response.data.data.token)
-    //       localStorage.setItem("loggedin", true)
-    //       // Do whatever you want with the access token, token type, and role
-    //       console.log(`Access Token: ${access_token}`);
-    //       console.log(`Token Type: ${token_type}`);
-    //       console.log(`Role: ${role}`);
-    //     })
-    //     .catch(error => {
-    //       // Handle the error response
-    //       console.error(error);
-    //     });
-    // };
-
 
     const handleSubmit = (event) => {
         event.preventDefault();
