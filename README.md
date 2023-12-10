@@ -1,20 +1,3 @@
-## Team Number: 37 
-
-# TEAM: ChargeUp Tech 
----
-
-### PROJECT: **ChargeMate(D7)**
-
-### COMPANY: **ChargeKart** ( [www.chargekart.co.in](https://www.chargekart.co.in) )
-
-### Team Members: 
-- Bhav Beri _(2021111013)_
-- Aditya Raghuvanshi _(2021114009)_
-- Aryan Gupta _(2021113012)_
-- Himanshu Sarraf _(2021101098)_
-
-----
----
 ## _Brief Problem Statement_
 
 The growth of the electric vehicle (EV) industry is hindered by the lack of convenient and accessible charging solutions. EV users face challenges in finding charging stations, managing financial transactions during the charging process, and monitoring the progress of the charging. The current solutions are often time-consuming, complicated, and stressful, which negatively affects the user experience and hinders the growth of the EV industry. 
